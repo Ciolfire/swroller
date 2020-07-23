@@ -1,27 +1,37 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from "./router";
+import soundlib from "./soundlib";
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+document.addEventListener('deviceready', () => {
+	console.log('Device ready event fired!');
 
-function play(sound) {
-  console.log("entering sound function");
-  let audio = new Media(sound, onSuccess, onError);
+	/*global Media:writable */
 
-  function onSuccess() {
-      console.log("Success");
-  }
+	new Vue({
+		router,
+		methods: {
+			play: function (track) {
+				const result = soundlib.sounds.filter(function (elem) {
+					if (elem.name == track) return elem;
+				});
 
-  function onError(error) {
-      console.log("Error:" + error.code);
-  }
+				let audio = new Media(result[0].src, onSuccess, onError);
 
-  audio.play();
-}
+				function onSuccess() {
+					console.log("Success");
+				}
+				
+				function onError(error) {
+					console.log("Error:" + error.code);
+				}
+				
+				audio.play();
+			}
+		},
+		render: h => h(App)
+	}).$mount('#app')
 
-console.log(play);
+});
