@@ -1,117 +1,106 @@
 <template>
   <div id="ui">
-  <div class="container">
+    <!-- Ability -->
     <div class="row">
-        <div class="col dice-number">9</div>
-        <svg class="col" height="50" viewBox="0 0 100 100">
-          <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
-        </svg>
-        <div class="col add">+</div>
-        <div class="col remove"><span>-</span></div>
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.ability.length }}</div>
+      <div @click="addToPool('ability')" class="col add btn">+</div>
+      <div @click="removeFromPool('ability')" class="col remove btn">-</div>
     </div>
+    <!-- Proficiency -->
     <div class="row">
-        <div class="col remove"><span>-</span></div>
-        <div class="col add">+</div>
-          <svg width="50" height="50" viewBox="0 0 100 100">
-            <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
-          </svg>
-        <div class="col dice-number">9</div>
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.proficiency.length }}</div>
+      <div @click="addToPool('proficiency')" class="col add btn">+</div>
+      <div @click="removeFromPool('proficiency')" class="col remove btn">-</div>
     </div>
-  </div>
-  <div class="container">
-      <div class="row">
-        <svg class="col" height="50" viewBox="0 0 100 100">
-          <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
-        </svg>
-        <div class="col remove"><span>-</span></div>
-        <div class="col dice-number">9</div>
-        <div class="col add">+</div>
-    </div>
+    <!-- difficulty -->
     <div class="row">
-        <div class="col remove"><span>-</span></div>
-        <div class="col dice-number">9</div>
-        <div class="col add">+</div>
-          <svg width="50" height="50" viewBox="0 0 100 100">
-            <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
-          </svg>
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(56,0,65);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.difficulty.length }}</div>
+      <div @click="addToPool('difficulty')" class="col add btn">+</div>
+      <div @click="removeFromPool('difficulty')" class="col remove btn">-</div>
     </div>
-  </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col remove"><span>-</span></div>
-        <div class="col dice-number">9</div>
-        <svg class="col" height="50" viewBox="0 0 100 100">
-          <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
-        </svg>
-    </div>
+    <!-- challenge -->
     <div class="row">
-          <svg width="50" height="50" viewBox="0 0 100 100">
-            <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
-          </svg>
-        <div class="col dice-number">9</div>
-        <div class="col remove"><span>-</span></div>
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(203,0,8);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.challenge.length }}</div>
+      <div @click="addToPool('challenge')" class="col add btn">+</div>
+      <div @click="removeFromPool('challenge')" class="col remove btn">-</div>
     </div>
-  </div>
-    <!-- 
-<td style="height:50px;">9</td>
-<td rowspan="2">
-<svg width="100" height="100">
-<polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
-</svg>
-</td>
-<td rowspan="2">
-<svg width="100" height="100">
-<polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
-</svg>
-</td>
-<td style="height:50px;">9</td>
-    -->
-    <!-- 
-<svg width="100" height="100">
-<polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(207,237,255);" />
-</svg>
-<svg width="100" height="100">
-<polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(2,0,11);" />
-</svg> 
-    -->
-    <!--
-<svg width="100" height="100">
-<polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(56,0,65);" />
-</svg>
-<svg width="100" height="100">
-<polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(203,0,8);" />
-</svg>
-<svg width="100" height="100">
-<polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,255,255);" />
-    </svg>-->
-    <!-- <router-link to="/" class="btn" v-on:click.native="play('dicer-back')">Back</router-link> -->
-    <router-link to="/" class="btn" v-on:click.native="play('dicer-back')">Roll</router-link>
+    <!-- boost -->
+    <div class="row">
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(207,237,255);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.boost.length }}</div>
+      <div @click="addToPool('boost')" class="col add btn">+</div>
+      <div @click="removeFromPool('boost')" class="col remove btn">-</div>
+    </div>
+    <!-- setback -->
+    <div class="row">
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(2,0,11);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.setback.length }}</div>
+      <div @click="addToPool('setback')" class="col add btn">+</div>
+      <div @click="removeFromPool('setback')" class="col remove btn">-</div>
+    </div>
+    <!-- Force -->
+    <div class="row">
+      <svg class="col" height="50" viewBox="0 0 100 100">
+        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,255,255);" />
+      </svg>
+      <div class="col dice-number">{{ rules._pool.force.length }}</div>
+      <div @click="addToPool('force')" class="col add btn">+</div>
+      <div @click="removeFromPool('force')" class="col remove btn">-</div>
+    </div>
+    <router-link to="/" class="btn btn-lg" v-on:click.native="play('dicer-back')">Roll</router-link>
   </div>
 </template>
 
 <script>
+import Rules from './../rules';
+
+let rules = new Rules();
+
 export default {
+  data: function() {
+    return {
+      rules: rules
+    }
+  },
   methods: {
     play: function (sound) {
       this.$root.play(sound);
     },
+    addToPool: function (type, quantity=1) {
+      rules.addToPool(type, quantity);
+    },
+    removeFromPool: function (type, quantity=1) {
+      rules.removeFromPool(type, quantity);
+    },
   },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start
-}
-
 .row {
-  width: 50%;
+  width: 90%;
   display: flex;
-  justify-content: flex-start
+  margin: auto;
+  margin-top: 10px;
+  justify-content: flex-start;
 }
 
 .col {
@@ -120,7 +109,7 @@ export default {
 }
 
 .add {
-  color: green;
+  color: #4273ae;
   font-size: xxx-large;
   text-align: center;
   cursor: pointer;
@@ -135,27 +124,15 @@ export default {
 
 .dice-number {
   color: #4273ae;
-  font-size: xxx-large;
+  font-size: xx-large;
   text-align: center;
-}
-
-.dice-block {
-  display: inline-block;
-  width: 50%;
-  background: blueviolet;
-}
-
-svg {
-  /* background: lightslategrey; */
+  font-family: "starFont";
 }
 
 polygon {
-  stroke: black;
+  stroke: rgb(255, 255, 255);
   stroke-opacity: 0.3;
   stroke-width: 2;
   filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);
-}
-
-text {
 }
 </style>

@@ -78,21 +78,28 @@ h1 {
 
 .btn {
 	display: block;
-  margin: 20px 10%;
+  margin: 20px;
   overflow: visible;
-  padding-top: 10px;
-  padding-bottom: 10px;
   text-align: center;
   font-family: "starFontO";
-  color: #4273ae;
+  /* color: #4273ae; */
+  color: #e0d648;
   border: 2px solid #4273ae;
+  box-shadow: inset 0 0 10px #4273ae;
   font-size: x-large;
   background: black;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-lg {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .btn:active {
   transform: scale(0.95);
   font-family: "starFont";
+  box-shadow: inset 0 0 30px #4273ae;
 }
 </style>
