@@ -33,7 +33,7 @@ body {
   /* Padding to avoid the "unsafe" areas behind notches in the screen */
   padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
     env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   width: 100%;
   overflow: hidden;
 }
@@ -44,7 +44,6 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -81,11 +80,12 @@ h1 {
 	display: block;
   margin: 20px 10%;
   overflow: visible;
-  padding: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-align: center;
   font-family: "starFontO";
   color: #4273ae;
-  border: 1px solid #4273ae;
+  border: 2px solid #4273ae;
   font-size: x-large;
   background: black;
   cursor: pointer;

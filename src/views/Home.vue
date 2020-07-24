@@ -1,10 +1,10 @@
 <template>
     <div id="ui">
-      <h1>Star Roller</h1>
-      <router-link to="/dicer" class="btn" v-on:click.native="play('dicer-click')">Dicer</router-link>
-      <router-link to="/hello" class="btn">hello</router-link>
-      <img style="transform: rotateY(180deg);margin-right:150px;" src="./../assets/img/rebeltrooper.png">
+      <h1>STAR ROLLER</h1>
+      <img style="transform: rotateY(180deg);margin-right:60%;" src="./../assets/img/rebeltrooper.png">
       <img src="./../assets/img/stormtrooper.png">
+      <router-link to="/dicer" class="btn" v-on:click.native="play('dicer-click')">Dicer</router-link>
+      <!-- <router-link to="/hello" class="btn">hello</router-link> -->
     </div>
 </template>
 
@@ -18,3 +18,8 @@ export default {
   },
 };
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>
