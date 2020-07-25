@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from "./router";
 import soundlib from "./soundlib";
+import Rules from "./rules";
 
 Vue.config.productionTip = false
 
@@ -9,6 +10,7 @@ document.addEventListener('deviceready', () => {
 	console.log('Device ready event fired!');
 
 	/*global Media:writable */
+Vue.prototype.$rules = new Rules();
 
 	new Vue({
 		router,
@@ -21,7 +23,6 @@ document.addEventListener('deviceready', () => {
 				let audio = new Media(result[0].src, onSuccess, onError);
 
 				function onSuccess() {
-					console.log("Success");
 				}
 				
 				function onError(error) {
