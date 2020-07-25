@@ -97,6 +97,19 @@ h1 {
   padding-bottom: 10px;
 }
 
+.btn-off {
+  display: block;
+  margin: 20px;
+  overflow: visible;
+  text-align: center;
+  font-family: "starFontO";
+  color: #202020;
+  border: 2px solid #202020;
+  box-shadow: inset 0 0 10px #202020;
+  font-size: xxx-large;
+  text-decoration: none;
+}
+
 .btn:active {
   transform: scale(0.95);
   font-family: "starFont";

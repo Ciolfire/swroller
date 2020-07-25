@@ -7,7 +7,7 @@ import Rules from "./rules";
 Vue.config.productionTip = false
 
 document.addEventListener('deviceready', () => {
-	console.log('Device ready event fired!');
+	console.info('[Device ready]');
 
 	/*global Media:writable */
 Vue.prototype.$rules = new Rules();

@@ -3,7 +3,7 @@
       <h1>Result</h1>
       <img style="transform: rotateY(180deg);margin-right:60%;" src="./../assets/img/rebeltrooper.png">
       <img src="./../assets/img/stormtrooper.png">
-      <div>{{ this.rules.getResult() }}</div>
+      <div class="btn">{{ this.rules.getResult() }}</div>
       <router-link to="/dicer" class="btn btn-lg" v-on:click.native="play('dicer-click')">Dicer</router-link>
       <!-- <router-link to="/hello" class="btn">hello</router-link> -->
     </div>

@@ -4,22 +4,19 @@ export default class Rules {
     _dices;
     _pool;
     _result;
+    _limit = {
+        'ability': 7,
+        'proficiency': 9,
+        'difficulty': 7,
+        'challenge': 9,
+        'boost': 7,
+        'setback': 5,
+        'force': 5,
+    }
 
     constructor() {
         // We initialize the dice list
         this._dices = {};
-        // We initialize the pool
-        this._defaultPool = {
-            'ability': [],
-            'proficiency': [],
-            'difficulty': [],
-            'challenge': [],
-            'boost': [],
-            'setback': [],
-            'force': []
-        };
-        this._pool = this._defaultPool;
-
         // Success oppose failure, cancel each other
         // Advantage oppose threat, cancel each other
         this._setBoost();
@@ -31,6 +28,8 @@ export default class Rules {
         this._setChallenge();
         // Force has it's own mechanics
         this._setForce();
+        // We initialize the pool
+        this.resetPool();
     }
 
     // Used to register the different dices that will be used
@@ -53,149 +52,85 @@ export default class Rules {
     getResult() {
         return this._result;
     }
-
-    getBoost() {
-        return this._dices['boost'];
-    }
-
+    
     _setBoost() {
+        console.info('setBoost');
         this._dices['boost'] = {
-            1: {},
-            2: {},
-            3: { 'advantage': 1 },
-            4: { 'success': 1 },
-            5: { 'advantage': 2 },
-            6: { 'success': 1, 'advantage': 1 },
+            1: {}, 2: {}, 3: { 'advantage': 1 }, 4: { 'success': 1 }, 5: { 'advantage': 2 }, 6: { 'success': 1, 'advantage': 1 },
         };
-    }
-
-    getSetback() {
-        return this._dices['setback'];
     }
 
     _setSetback() {
+        console.info('setSetback');
         this._dices['setback'] = {
-            1: {},
-            2: {},
-            3: { 'advantage': -1 },
-            4: { 'advantage': -1 },
-            5: { 'success': -1 },
-            6: { 'success': -1 },
+            1: {}, 2: {}, 3: { 'advantage': -1 }, 4: { 'advantage': -1 }, 5: { 'success': -1 }, 6: { 'success': -1 },
         };
-    }
-
-    getAbility() {
-        return this._dices['ability'];
     }
 
     _setAbility() {
+        console.info('setAbility');
         this._dices['ability'] = {
-            1: {},
-            2: { 'advantage': 1 },
-            3: { 'advantage': 1 },
-            4: { 'success': 1 },
-            5: { 'success': 1 },
-            6: { 'advantage': 2 },
-            7: { 'success': 1, 'advantage': 1 },
-            8: { 'success': 2 },
+            1: {}, 2: { 'advantage': 1 }, 3: { 'advantage': 1 }, 4: { 'success': 1 }, 5: { 'success': 1 }, 6: { 'advantage': 2 }, 7: { 'success': 1, 'advantage': 1 }, 8: { 'success': 2 },
         };
-    }
-
-    getDifficulty() {
-        return this._dices['difficulty'];
     }
 
     _setDifficulty() {
+        console.info('setDifficulty');
         this._dices['difficulty'] = {
-            1: {},
-            2: { 'advantage': -1 },
-            3: { 'advantage': -1 },
-            4: { 'advantage': -1 },
-            5: { 'success': -1 },
-            6: { 'advantage': -2 },
-            7: { 'success': -1, 'advantage': -1 },
-            8: { 'success': -2 },
+            1: {}, 2: { 'advantage': -1 }, 3: { 'advantage': -1 }, 4: { 'advantage': -1 }, 5: { 'success': -1 }, 6: { 'advantage': -2 }, 7: { 'success': -1, 'advantage': -1 }, 8: { 'success': -2 },
         };
-    }
-
-    getProficiency() {
-        return this._dices['proficiency'];
     }
 
     _setProficiency() {
+        console.info('setProficiency');
         this._dices['proficiency'] = {
-            1: {},
-            2: { 'advantage': 1 },
-            3: { 'success': 1 },
-            4: { 'success': 1 },
-            5: { 'advantage': 2 },
-            6: { 'advantage': 2 },
-            7: { 'success': 1, 'advantage': 1 },
-            8: { 'success': 1, 'advantage': 1 },
-            9: { 'success': 1, 'advantage': 1 },
-            10: { 'success': 2 },
-            11: { 'success': 2 },
-            12: { 'success': 1, 'triumph': 1 },
+            1: {}, 2: { 'advantage': 1 }, 3: { 'success': 1 }, 4: { 'success': 1 }, 5: { 'advantage': 2 }, 6: { 'advantage': 2 }, 7: { 'success': 1, 'advantage': 1 }, 8: { 'success': 1, 'advantage': 1 }, 9: { 'success': 1, 'advantage': 1 }, 10: { 'success': 2 }, 11: { 'success': 2 }, 12: { 'success': 1, 'triumph': 1 },
         };
-    }
-
-    getChallenge() {
-        return this._dices['challenge'];
     }
 
     _setChallenge() {
+        console.info('setChallenge');
         this._dices['challenge'] = {
-            1: {},
-            2: { 'advantage': -1 },
-            3: { 'advantage': -1 },
-            4: { 'success': -1 },
-            5: { 'success': -1 },
-            6: { 'advantage': -2 },
-            7: { 'advantage': -2 },
-            8: { 'success': -1, 'advantage': -1 },
-            9: { 'success': -1, 'advantage': -1 },
-            10: { 'success': -2 },
-            11: { 'success': -2 },
-            12: { 'success': -1, 'despair': 1 },
+            1: {}, 2: { 'advantage': -1 }, 3: { 'advantage': -1 }, 4: { 'success': -1 }, 5: { 'success': -1 }, 6: { 'advantage': -2 }, 7: { 'advantage': -2 }, 8: { 'success': -1, 'advantage': -1 }, 9: { 'success': -1, 'advantage': -1 }, 10: { 'success': -2 }, 11: { 'success': -2 }, 12: { 'success': -1, 'despair': 1 },
         };
-    }
-
-    getForce() {
-        return this._dices['force'];
     }
 
     _setForce() {
-        this._dices['force'] = {
-            1: { 'dark': 1 },
-            2: { 'dark': 1 },
-            3: { 'dark': 1 },
-            4: { 'dark': 1 },
-            5: { 'dark': 1 },
-            6: { 'dark': 1 },
-            7: { 'dark': 2 },
-            8: { 'dark': 1 },
-            9: { 'dark': 1 },
-            10: { 'light': 2 },
-            11: { 'light': 2 },
-            12: { 'light': 2 },
+        console.info('setForce');
+        this._dices['force'] = { 1: { 'dark': 1 }, 2: { 'dark': 1 }, 3: { 'dark': 1 }, 4: { 'dark': 1 }, 5: { 'dark': 1 }, 6: { 'dark': 1 }, 7: { 'dark': 2 }, 8: { 'dark': 1 }, 9: { 'dark': 1 }, 10: { 'light': 2 }, 11: { 'light': 2 }, 12: { 'light': 2 },
         };
     }
 
-    emptyPool() {
-        this.pool = this._defaultPool;
+    resetPool() {
+        console.info("resetPool");
+        this._pool = {
+            'ability': [],
+            'proficiency': [],
+            'difficulty': [],
+            'challenge': [],
+            'boost': [],
+            'setback': [],
+            'force': [],
+        };
     }
-
+    
     // Add a quantity of dices to the pool to roll
     addToPool(type, quantity = 1) {
+        console.info("[addToPool] type:" + type + "quantity:" + quantity);
         const dice = new Dice(type, this._dices[type]);
-        this._pool[type].push(dice);
+        if (this._pool[type].length < this._limit[type]) {
+            this._pool[type].push(dice);
+        } else {
+            return;
+        }
         if (quantity > 1) {
             this.addToPool(type, quantity - 1);
         }
     }
-
-    // We remove a quantity of dices from the pool, only if there is enough dices
+    
+    // We remove a quantity of dices from the pool
     removeFromPool(type, quantity = 1) {
+        console.info("[removeFromPool] type:" + type + " quantity:" + quantity);
         this._pool[type].pop();
         if (quantity > 1) {
             this.removeFromPool(type, quantity - 1);

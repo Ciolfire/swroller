@@ -7,6 +7,14 @@ export default {
         {
             name: 'dicer-back',
             src: "sound/ui/Confirm2.mp3"
-        }
+        },
+        {
+            name: 'delete',
+            src: "sound/ui/Delete.mp3"
+        },
+        {
+            name: 'delete2',
+            src: "sound/ui/Delete2.mp3"
+        },
     ]
 }
