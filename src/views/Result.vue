@@ -1,29 +1,67 @@
 <template>
-    <div id="ui">
-      <h1>Result</h1>
-      <img style="transform: rotateY(180deg);margin-right:60%;" src="./../assets/img/rebeltrooper.png">
-      <img src="./../assets/img/stormtrooper.png">
-      <div class="btn">{{ this.rules.getResult() }}</div>
-      <router-link to="/dicer" class="btn btn-lg" v-on:click.native="play('dicer-click')">Dicer</router-link>
-      <!-- <router-link to="/hello" class="btn">hello</router-link> -->
-    </div>
+  <div id="ui">
+    <h1>Result</h1>
+    <img
+      style="transform: rotateY(180deg);margin-right:60%;"
+      src="./../assets/img/rebeltrooper.png"
+    />
+    <img src="./../assets/img/stormtrooper.png" />
+    <h5>
+			<span v-if="this.rules.getResult('success') > 0">
+				<h1>Success !!</h1>
+				<span class="good">{{ this.rules.getResult('success') }} success</span>
+			</span>
+			<span v-else>
+				<h1>Fail ...</h1>
+				<span class="bad" v-if="this.rules.getResult('success') < 0">{{ this.rules.getResult('success') * -1 }} failures</span>
+			</span>
+			<span class="good" v-if="this.rules.getResult('advantage') > 0"> {{ this.rules.getResult('advantage') }} advantage</span>
+			<span class="good" v-if="this.rules.getResult('triumph') > 0"> {{ this.rules.getResult('triumph') }} triumph</span>
+			<br>
+			<span class="bad" v-if="this.rules.getResult('advantage') < 0"> {{ this.rules.getResult('advantage') * -1 }} threat</span>
+			<span class="bad" v-if="this.rules.getResult('despair') > 0"> {{ this.rules.getResult('despair') }} despair</span>
+			<span class="light" v-if="this.rules.getResult('light') > 0"> {{ this.rules.getResult('light') }} light points</span>
+			<br>
+			<span class="dark" v-if="this.rules.getResult('dark') > 0"> {{ this.rules.getResult('dark') }} dark points</span>
+		</h5>
+    <!-- <div class="btn">{{ this.rules.getResult() }}</div> -->
+		<br>
+		<br>
+		<h5>details</h5>
+		<div style="overflow:auto; height:30%">
+			<ul>
+				<li v-for="item in this.rules._resultDetail" :key="item.type">
+					<svg class="col" height="25" viewBox="0 0 100 100">
+						<polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
+					</svg>
+				</li>
+			</ul>
+		</div>
+    <router-link to="/dicer" class="btn btn-lg" v-on:click.native="play('dicer-click')">Dicer</router-link>
+  </div>
 </template>
 
 <script>
+import Display from "./../Display.js";
+
 export default {
-    data: function() {
+  data: function () {
     return {
-      rules: this.rules
-    }
+			rules: this.rules,
+			Display: Display,
+    };
   },
   created: function () {
     this.rules = this.$rules;
     this.rules.rollPool();
   },
   methods: {
-    play: function(sound) {
-        this.$root.play(sound);
-    }
+    play: function (sound) {
+      this.$root.play(sound);
+		},
+		ressource: function (category, type) {
+			return Display[category].find(obj => obj.type == type)['src'];
+		}
   },
 };
 
@@ -52,5 +90,54 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.good {
+	color: darkblue;
+}
 
+.bad {
+	color: darkred;
+}
+
+.light {
+	color: white;
+}
+
+.dark {
+	color: rgb(73, 21, 21);
+}
+
+.dice {
+  stroke: rgb(255, 255, 255);
+  stroke-opacity: 1;
+  stroke-width: 2;
+  filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);
+}
+
+.ability {
+	fill:rgb(70,111,36);
+}
+
+.proficiency {
+	fill:rgb(255,246,46);
+}
+
+.difficulty {
+	fill:rgb(56,0,65);
+}
+
+.challenge {
+	fill:rgb(203,0,8);
+}
+
+.boost {
+	fill:rgb(207,237,255);
+}
+
+.setback {
+	fill:rgb(2,0,11);
+}
+
+.force {
+	fill:rgb(255,255,255);
+}
 </style>

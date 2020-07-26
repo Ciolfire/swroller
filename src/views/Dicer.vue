@@ -1,81 +1,28 @@
 <template>
   <div id="ui">
-    <div @click="resetPool()" class="btn btn-lg reset" v-on:click="play('delete2')">Reset</div>
-    <!-- Ability -->
-    <div class="row">
+    <div class="row" v-for="item in display.dice" :key="item">
       <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(70,111,36);" />
+        <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
       </svg>
-      <div class="col dice-number">{{ this.rules._pool.ability.length }}</div>
-      <div @click="addToPool('ability')" class="col" v-bind:class="[(this.rules._pool.ability.length>=this.rules._limit.ability) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('ability')" class="col" v-bind:class="[this.rules._pool.ability.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- Proficiency -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,246,46);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.proficiency.length }}</div>
-      <div @click="addToPool('proficiency')" class="col" v-bind:class="[(this.rules._pool.proficiency.length>=this.rules._limit.proficiency) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('proficiency')" class="col" v-bind:class="[this.rules._pool.proficiency.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- difficulty -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="50,15 75,50 50,85 25,50" style="fill:rgb(56,0,65);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.difficulty.length }}</div>
-      <div @click="addToPool('difficulty')" class="col" v-bind:class="[(this.rules._pool.difficulty.length>=this.rules._limit.difficulty) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('difficulty')" class="col" v-bind:class="[this.rules._pool.difficulty.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- challenge -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(203,0,8);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.challenge.length }}</div>
-      <div @click="addToPool('challenge')" class="col" v-bind:class="[(this.rules._pool.challenge.length>=this.rules._limit.challenge) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('challenge')" class="col" v-bind:class="[this.rules._pool.challenge.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- boost -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(207,237,255);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.boost.length }}</div>
-      <div @click="addToPool('boost')" class="col" v-bind:class="[(this.rules._pool.boost.length>=this.rules._limit.boost) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('boost')" class="col" v-bind:class="[this.rules._pool.boost.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- setback -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="25,25 75,25 75,75 25,75" style="fill:rgb(2,0,11);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.setback.length }}</div>
-      <div @click="addToPool('setback')" class="col" v-bind:class="[(this.rules._pool.setback.length>=this.rules._limit.setback) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('setback')" class="col" v-bind:class="[this.rules._pool.setback.length ? 'remove btn' : 'btn-off']">-</div>
-    </div>
-    <!-- Force -->
-    <div class="row">
-      <svg class="col" height="50" viewBox="0 0 100 100">
-        <polygon points="40,25 70,25 85,51 70,77 40,77 25,51" style="fill:rgb(255,255,255);" />
-      </svg>
-      <div class="col dice-number">{{ this.rules._pool.force.length }}</div>
-      <div @click="addToPool('force')" class="col" v-bind:class="[(this.rules._pool.force.length>=this.rules._limit.force) ? 'btn-off' : 'add btn']">+</div>
-      <div @click="removeFromPool('force')" class="col" v-bind:class="[this.rules._pool.force.length ? 'remove btn' : 'btn-off']">-</div>
+      <div class="col dice-number">{{ rules.getPoolSize(item.type) }}</div>
+      <div @click="addToPool(item.type)" :class="[(rules.getPoolSize(item.type)>=rules.getLimit(item.type)) ? 'col btn-off' : 'col add btn']">+</div>
+      <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'col remove btn' : 'col btn-off']">-</div>
     </div>
     <router-link to="/result" class="btn btn-lg" v-on:click.native="play('dicer-back')">Roll</router-link>
   </div>
 </template>
 
 <script>
+import Display from "./../Display.js";
+
 export default {
   created: function () {
     this.rules = this.$rules;
   },
   data: function() {
     return {
-      rules: this.rules
+      rules: this.rules,
+      display: Display
     }
   },
   methods: {
@@ -91,6 +38,15 @@ export default {
     resetPool: function () {
       this.rules.resetPool();
     },
+    getPoolSize(type) {
+      return this.rules.getPoolSize(type);
+    },
+    getLimit(type) {
+      return this.rules.getLimit(type);
+    },
+    ressource: function (category, type) {
+			return Display[category].find(obj => obj.type == type)['src'];
+		}
   },
 };
 
@@ -113,7 +69,7 @@ export default {
 
 .add {
   color: #4273ae;
-  font-size: xxx-large;
+  font-size: xx-large;
 }
 
 .reset {
@@ -122,7 +78,7 @@ export default {
 
 .remove {
   color: darkred;
-  font-size: xxx-large;
+  font-size: xx-large;
 }
 
 .dice-number {
@@ -132,10 +88,38 @@ export default {
   font-family: "starFont";
 }
 
-polygon {
+.dice {
   stroke: rgb(255, 255, 255);
-  stroke-opacity: 0.3;
+  stroke-opacity: 1;
   stroke-width: 2;
   filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);
+}
+
+.ability {
+	fill:rgb(70,111,36);
+}
+
+.proficiency {
+	fill:rgb(255,246,46);
+}
+
+.difficulty {
+	fill:rgb(56,0,65);
+}
+
+.challenge {
+	fill:rgb(203,0,8);
+}
+
+.boost {
+	fill:rgb(207,237,255);
+}
+
+.setback {
+	fill:rgb(2,0,11);
+}
+
+.force {
+	fill:rgb(255,255,255);
 }
 </style>

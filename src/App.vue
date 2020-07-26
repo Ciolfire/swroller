@@ -76,6 +76,17 @@ h1 {
   color: #ffe81f;
 }
 
+h5 {
+  font-size: large;
+  font-weight: normal;
+  margin: 0px;
+  overflow: visible;
+  padding: 0px;
+  text-align: center;
+  font-family: starFont;
+  color: #ffe81f;
+}
+
 .btn {
 	display: block;
   margin: 20px;
@@ -106,7 +117,7 @@ h1 {
   color: #202020;
   border: 2px solid #202020;
   box-shadow: inset 0 0 10px #202020;
-  font-size: xxx-large;
+  font-size: xx-large;
   text-decoration: none;
 }
 
