@@ -1,5 +1,6 @@
 <template>
   <div id="ui">
+    <div @click="resetPool()" class="btn btn-lg reset" v-on:click="play('delete2')">Reset</div>
     <div class="row" v-for="item in display.dice" :key="item">
       <svg class="col" height="50" viewBox="0 0 100 100">
         <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
@@ -30,6 +31,7 @@ export default {
       this.$root.play(sound);
     },
     addToPool: function (type, quantity=1) {
+      console.log("click");
       this.rules.addToPool(type, quantity);
     },
     removeFromPool: function (type, quantity=1) {
