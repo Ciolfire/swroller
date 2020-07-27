@@ -30,7 +30,7 @@
 		<h5>details</h5>
 		<div class="row" style="overflow:auto;flex-wrap:wrap">
 				<div v-for="(item,index) in rules._resultDetail" :key="index">
-					<svg class="col" height="25" viewBox="0 0 100 100">
+					<svg class="col" height="30" viewBox="0 0 100 100">
 						<polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
 					</svg>
 					<span class="star-symbol star-symbol-light">{{ detailResult(item.roll)}}</span>
@@ -84,11 +84,9 @@ export default {
 						}
 						break;
 					case 'triumph':
-						symbol = "x";
-						break;
+						return "x";
 					case 'despair':
-						symbol = "y";
-						break;
+						return "y";
 					case 'light':
 						symbol = "z";
 						break;
