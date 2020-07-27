@@ -47,6 +47,14 @@ body {
   color: #2c3e50;
 }
 
+.row {
+  width: 90%;
+  display: flex;
+  margin: auto;
+  margin-top: 10px;
+  justify-content: flex-start;
+}
+
 #ui {
   position: absolute;
   top: 0;
@@ -63,6 +71,12 @@ body {
 @font-face {
   font-family: "starFont";
   src: url("assets/fonts/SF Distant Galaxy.ttf");
+}
+
+@font-face {
+  font-family: "starSymbol";
+  src: url("assets/fonts/EotE_Symbol-Regular_v1.otf");
+  /* s(uccess), f(ailure), a(dvantage),t(hreat), x(triumph), y(despair),z(force) */
 }
 
 h1 {
@@ -85,6 +99,18 @@ h5 {
   text-align: center;
   font-family: starFont;
   color: #ffe81f;
+}
+
+.star-symbol {
+  font-family: starSymbol;
+}
+
+.star-symbol-light {
+  color:white;
+}
+
+.star-symbol-dark {
+  color:white;
 }
 
 .btn {
