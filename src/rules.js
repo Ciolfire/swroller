@@ -43,8 +43,18 @@ export default class Rules {
 		return this._pool;
 	}
 	
-	getPoolSize(type) {
-		return this._pool[type].length;
+	getPoolSize(type=null) {
+		if (type) {
+			return this._pool[type].length;
+		} else {
+			// We check if the pool is empty
+			for (const index in this._pool) {
+				if (this._pool[index].length) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	getResult(type = null) {

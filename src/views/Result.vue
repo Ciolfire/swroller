@@ -7,10 +7,10 @@
     <img src="./../assets/img/stormtrooper.png" />
     <h5>
 			<h1 v-if="this.rules.getResult('success') > 0" class="success">
-				Success !!
+				Success !
 			</h1>
 			<h1 v-else class="failure">
-				Fail ...
+				Failure...
 			</h1>
 			<p style="font-size:1.2em;">
 				<span class="failure" v-if="this.rules.getResult('success') < 0">{{ this.rules.getResult('success') * -1 }} <span class="star-symbol">f</span></span>

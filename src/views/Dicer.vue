@@ -1,6 +1,6 @@
 <template>
   <div id="ui">
-    <div @click="resetPool()" class="btn btn-lg reset" v-on:click="play('delete2')">Reset</div>
+    <div @click="play('delete2')" class="btn btn-lg reset" v-on:click="resetPool()">Reset</div>
     <div class="row" v-for="(item, index) in display.dice" :key="index">
       <svg class="col" height="50" viewBox="0 0 100 100">
         <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
@@ -9,7 +9,7 @@
       <div @click="addToPool(item.type)" :class="[(rules.getPoolSize(item.type)>=rules.getLimit(item.type)) ? 'col btn-off' : 'col add btn']">+</div>
       <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'col remove btn' : 'col btn-off']">-</div>
     </div>
-    <router-link to="/result" class="btn btn-lg" v-on:click.native="play('dicer-back')">Roll</router-link>
+    <router-link :event="isNotEmpty? 'click' : ''" to="/result" :class="[isNotEmpty ? 'btn btn-lg' : 'btn-lg btn-off']" v-on:click.native="play('dicer-back')">Roll</router-link>
   </div>
 </template>
 
@@ -19,23 +19,29 @@ import Display from "./../Display.js";
 export default {
   created: function () {
     this.rules = this.$rules;
+    this.isNotEmpty = this.rules.getPoolSize();
   },
   data: function() {
     return {
       rules: this.rules,
-      display: Display
+      display: Display,
+      isNotEmpty: this.isNotEmpty
     }
   },
   methods: {
     play: function (sound) {
-      this.$root.play(sound);
+      if (this.isNotEmpty) {
+        this.$root.play(sound);
+      }
     },
     addToPool: function (type, quantity=1) {
       console.log("click");
       this.rules.addToPool(type, quantity);
+      this.isNotEmpty = this.rules.getPoolSize();
     },
     removeFromPool: function (type, quantity=1) {
       this.rules.removeFromPool(type, quantity);
+      this.isNotEmpty = this.rules.getPoolSize();
     },
     resetPool: function () {
       this.rules.resetPool();
