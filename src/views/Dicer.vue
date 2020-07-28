@@ -9,7 +9,7 @@
       <div @click="addToPool(item.type)" :class="[(rules.getPoolSize(item.type)>=rules.getLimit(item.type)) ? 'col btn-off' : 'col add btn']">+</div>
       <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'col remove btn' : 'col btn-off']">-</div>
     </div>
-    <router-link :event="isNotEmpty? 'click' : ''" to="/result" :class="[isNotEmpty ? 'btn btn-lg' : 'btn-lg btn-off']" v-on:click.native="play('dicer-back')">Roll</router-link>
+    <router-link :event="isPoolReady? 'click' : ''" to="/result" :class="[isPoolReady ? 'btn btn-lg' : 'btn-lg btn-off']" v-on:click.native="play('dicer-back')">Roll</router-link>
   </div>
 </template>
 
@@ -19,32 +19,33 @@ import Display from "./../Display.js";
 export default {
   created: function () {
     this.rules = this.$rules;
-    this.isNotEmpty = this.rules.getPoolSize();
+    this.isPoolReady = this.rules.getPoolSize();
   },
   data: function() {
     return {
       rules: this.rules,
       display: Display,
-      isNotEmpty: this.isNotEmpty
+      isPoolReady: this.isPoolReady
     }
   },
   methods: {
     play: function (sound) {
-      if (this.isNotEmpty) {
+      if (this.isPoolReady) {
         this.$root.play(sound);
       }
     },
     addToPool: function (type, quantity=1) {
       console.log("click");
       this.rules.addToPool(type, quantity);
-      this.isNotEmpty = this.rules.getPoolSize();
+      this.isPoolReady = true;
     },
     removeFromPool: function (type, quantity=1) {
       this.rules.removeFromPool(type, quantity);
-      this.isNotEmpty = this.rules.getPoolSize();
+      this.isPoolReady = this.rules.getPoolSize();
     },
     resetPool: function () {
       this.rules.resetPool();
+      this.isPoolReady = false;
     },
     getPoolSize(type) {
       return this.rules.getPoolSize(type);
