@@ -1,5 +1,5 @@
 # swroller
-
+<img src="home.png"><img src="dicer.png"><img src="result.png">
 ## Project setup
 ```
 npm install
@@ -7,7 +7,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run cordova-serve-browser
 ```
 
 ### Compiles and minifies for production
