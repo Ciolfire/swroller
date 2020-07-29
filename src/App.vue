@@ -29,38 +29,31 @@ body {
   font-size: 12px;
   height: 100vh;
   margin: 0px;
-  padding: 0px;
   /* Padding to avoid the "unsafe" areas behind notches in the screen */
   padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
-    env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
-  /* text-transform: uppercase; */
-  width: 100%;
-  overflow: hidden;
+           env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+  /* overflow: hidden; */
 }
 
 #app {
+  display: flex;
   position: relative;
-  height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
 
-.row {
-  width: 90%;
-  display: flex;
-  margin: auto;
-  margin-top: 10px;
-  justify-content: flex-start;
-}
-
 #ui {
+  display:flex;
+  flex-direction: column;
+  flex-grow: 1;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  box-shadow: inset 0 0 50px #4273ae;
 }
 
 @font-face {
@@ -152,4 +145,27 @@ h5 {
   font-family: "starFont";
   box-shadow: inset 0 0 30px #4273ae;
 }
+
+/* FLEX */
+.f-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-row {
+  display: flex;
+  margin: auto;
+  margin: 3vh 2vw;
+  justify-content: space-between;
+}
+
+.f-grow {
+  flex-grow: 1;
+}
+
+.f-center {
+  align-items: center;
+}
+
 </style>

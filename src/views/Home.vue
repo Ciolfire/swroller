@@ -1,10 +1,13 @@
 <template>
     <div id="ui">
-      <h1>STAR ROLLER</h1>
-      <img style="transform: rotateY(180deg);margin-right:60%;" src="./../assets/img/rebeltrooper.png">
-      <img src="./../assets/img/stormtrooper.png">
-      <router-link to="/dicer" class="btn btn-lg" v-on:click.native="play('dicer-click')">Dicer</router-link>
-      <!-- <router-link to="/hello" class="btn">hello</router-link> -->
+      <div class="f-row">
+        <img style="transform: rotateY(180deg);" src="./../assets/img/rebeltrooper.png">
+        <h1>STAR ROLLER</h1>
+        <img src="./../assets/img/stormtrooper.png">
+      </div>
+      <div class="f-row f-grow f-center">
+        <router-link id="start-btn" to="/dicer" v-on:click.native="play('dicer-click')">Start</router-link>
+      </div>
     </div>
 </template>
 
@@ -21,5 +24,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+img {
+  height: auto;
+  width: auto;
+  max-height: 65px;
+  max-width: 66px;
+}
 
+#start-btn {
+  border: 1px solid #4273ae;
+  margin: 50px;
+  padding: 10% 0%;
+
+  font-size: xxx-large;
+  font-weight: normal;
+  overflow: visible;
+  text-align: center;
+  font-family: starFont;
+  color: #ffe81f;
+  text-decoration: none;
+  flex-grow: 1;
+  background: black;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="ui">
     <div @click="play('delete2')" class="btn btn-lg reset" v-on:click="resetPool()">Reset</div>
-    <div class="row" v-for="(item, index) in display.dice" :key="index">
+    <div class="f-row" v-for="(item, index) in display.dice" :key="index">
       <svg class="col" height="50" viewBox="0 0 100 100">
         <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
       </svg>

@@ -13,7 +13,7 @@ export default {
 
 		function setCanvasExtents () {
 			background.style.width = "100%";
-			background.style.height = "100%";
+			background.style.height = "100vh";
 
 			width = background.offsetWidth;
 			height = background.offsetHeight;
@@ -25,7 +25,7 @@ export default {
 		setCanvasExtents();
 
     window.onresize = () => {
-      setCanvasExtents();
+      // setCanvasExtents();
     };
 
 		function makeStars(count) {
@@ -113,5 +113,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
