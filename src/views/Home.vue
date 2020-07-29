@@ -5,7 +5,7 @@
         <h1>STAR ROLLER</h1>
         <img src="./../assets/img/stormtrooper.png">
       </div>
-      <div class="f-row f-grow f-center">
+      <div class="f-row f-grow f-center" style="flex-direction:column">
         <router-link id="start-btn" to="/dicer" v-on:click.native="play('dicer-click')">Start</router-link>
       </div>
     </div>
@@ -32,11 +32,8 @@ img {
 }
 
 #start-btn {
-  border: 1px solid #4273ae;
-  margin: 50px;
-  padding: 10% 0%;
-
-  font-size: xxx-large;
+  width: 100%;
+  font-size: xx-large;
   font-weight: normal;
   overflow: visible;
   text-align: center;
@@ -44,6 +41,6 @@ img {
   color: #ffe81f;
   text-decoration: none;
   flex-grow: 1;
-  background: black;
+  line-height: 50vh;
 }
 </style>

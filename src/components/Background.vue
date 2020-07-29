@@ -78,7 +78,7 @@ export default {
 			let elapsed = time - prevTime;
 			prevTime = time;
 
-			moveStars(elapsed * 0.05);
+			moveStars(elapsed * 0.01);
 
 			clear();
 

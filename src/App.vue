@@ -51,7 +51,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   box-shadow: inset 0 0 50px #4273ae;
 }
@@ -155,9 +155,18 @@ h5 {
 
 .f-row {
   display: flex;
-  margin: auto;
-  margin: 3vh 2vw;
+  margin: 0;
+  /* margin: 3vh 2vw; */
   justify-content: space-between;
+}
+
+.f-col {
+  margin: 0;
+  flex-grow: 1;
+}
+
+.f-col-0 {
+  flex-grow: 0;
 }
 
 .f-grow {
@@ -166,6 +175,10 @@ h5 {
 
 .f-center {
   align-items: center;
+}
+
+.f-bottom {
+  align-items: flex-end;
 }
 
 </style>

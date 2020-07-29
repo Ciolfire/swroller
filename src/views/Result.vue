@@ -1,42 +1,39 @@
 <template>
   <div id="ui">
-    <img
-      style="transform: rotateY(180deg);margin-right:60%;"
-      src="./../assets/img/rebeltrooper.png"
-    />
-    <img src="./../assets/img/stormtrooper.png" />
-    <h5>
-			<h1 v-if="this.rules.getResult('success') > 0" class="success">
-				Success !
-			</h1>
-			<h1 v-else class="failure">
-				Failure...
-			</h1>
-			<p style="font-size:1.2em;">
-				<span class="failure" v-if="this.rules.getResult('success') < 0">{{ this.rules.getResult('success') * -1 }} <span class="star-symbol">f</span></span>
-				<span class="success" v-else-if="this.rules.getResult('success') > 0">{{ this.rules.getResult('success') }} <span class="star-symbol">s</span></span>
-				<span class="advantage" v-if="this.rules.getResult('advantage') > 0"> {{ this.rules.getResult('advantage') }} <span class="star-symbol">a</span></span>
-				<span class="triumph" v-if="this.rules.getResult('triumph') > 0"> {{ this.rules.getResult('triumph') }} <span class="star-symbol">x</span></span>
-				<span class="threat" v-if="this.rules.getResult('advantage') < 0"> {{ this.rules.getResult('advantage') * -1 }}<span class="star-symbol">t</span></span>
-				<span class="despair" v-if="this.rules.getResult('despair') > 0"> {{ this.rules.getResult('despair') }}<span class="star-symbol">y</span></span>
-				<br>
-				<span class="light" v-if="this.rules.getResult('light') > 0"> {{ this.rules.getResult('light') }} <span class="star-symbol star-symbol-light">z</span></span>
-				<span class="dark" v-if="this.rules.getResult('dark') > 0"> {{ this.rules.getResult('dark') }} <span class="star-symbol star-symbol-dark">Z</span></span>
-			</p>
-		</h5>
+    <h5 class="result">
+		<h1 v-if="this.rules.getResult('success') > 0" class="success">
+		Success !
+		</h1>
+		<h1 v-else class="failure">
+		Failure...
+		</h1>
+		<p style="font-size:1.2em;">
+			<span class="failure" v-if="this.rules.getResult('success') < 0">{{ this.rules.getResult('success') * -1 }} <span class="star-symbol">f</span></span>
+			<span class="success" v-else-if="this.rules.getResult('success') > 0">{{ this.rules.getResult('success') }} <span class="star-symbol">s</span></span>
+			<span class="advantage" v-if="this.rules.getResult('advantage') > 0"> {{ this.rules.getResult('advantage') }} <span class="star-symbol">a</span></span>
+			<span class="triumph" v-if="this.rules.getResult('triumph') > 0"> {{ this.rules.getResult('triumph') }} <span class="star-symbol">x</span></span>
+			<span class="threat" v-if="this.rules.getResult('advantage') < 0"> {{ this.rules.getResult('advantage') * -1 }}<span class="star-symbol">t</span></span>
+			<span class="despair" v-if="this.rules.getResult('despair') > 0"> {{ this.rules.getResult('despair') }}<span class="star-symbol">y</span></span>
+			<br>
+			<span class="light" v-if="this.rules.getResult('light') > 0"> {{ this.rules.getResult('light') }} <span class="star-symbol star-symbol-light">z</span></span>
+			<span class="dark" v-if="this.rules.getResult('dark') > 0"> {{ this.rules.getResult('dark') }} <span class="star-symbol star-symbol-dark">Z</span></span>
+		</p>
+	</h5>
     <!-- <div class="btn">{{ this.rules.getResult() }}</div> -->
 		<br>
 		<br>
 		<h5>details</h5>
-		<div class="row" style="overflow:auto;flex-wrap:wrap">
+		<div class="f-row">
 				<div v-for="(item,index) in rules._resultDetail" :key="index">
-					<svg class="col" height="30" viewBox="0 0 100 100">
+					<svg class="f-col" height="30" viewBox="0 0 100 100">
 						<polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
 					</svg>
 					<span class="star-symbol star-symbol-light">{{ detailResult(item.roll)}}</span>
 				</div>
 		</div>
-    <router-link to="/dicer" class="btn btn-lg" v-on:click.native="play('dicer-click')">Dicer</router-link>
+		<div class="f-row f-grow f-bottom">
+			<router-link to="/dicer" class="btn btn-lg f-grow" v-on:click.native="play('dicer-click')">Dicer</router-link>
+		</div>
   </div>
 </template>
 
@@ -128,6 +125,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.result {
+	padding-top: 15px;
+}
+
+.f-row {
+	flex-wrap:wrap;
+	width: 80%;
+	margin: auto;
+}
+
 .success {
 	color: rgb(105,155,224);
 }
@@ -174,7 +181,7 @@ export default {
   stroke: rgb(255, 255, 255);
   stroke-opacity: 1;
   stroke-width: 2;
-  filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);
+  filter: drop-shadow(rgba(255, 255, 255, 1) 0px 0px 10px);
 }
 
 .ability {

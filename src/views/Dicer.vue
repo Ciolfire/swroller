@@ -1,15 +1,17 @@
 <template>
   <div id="ui">
     <div @click="play('delete2')" class="btn btn-lg reset" v-on:click="resetPool()">Reset</div>
-    <div class="f-row" v-for="(item, index) in display.dice" :key="index">
-      <svg class="col" height="50" viewBox="0 0 100 100">
+    <div class="f-row dice-row" v-for="(item, index) in display.dice" :key="index">
+      <svg class="f-col-0" width="50" height="50" viewBox="0 0 100 100">
         <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
       </svg>
-      <div class="col dice-number">{{ rules.getPoolSize(item.type) }}</div>
-      <div @click="addToPool(item.type)" :class="[(rules.getPoolSize(item.type)>=rules.getLimit(item.type)) ? 'col btn-off' : 'col add btn']">+</div>
-      <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'col remove btn' : 'col btn-off']">-</div>
+      <div class="f-col-0 dice-number">{{ rules.getPoolSize(item.type) }}</div>
+      <div @click="addToPool(item.type)" :class="[(rules.getPoolSize(item.type)>=rules.getLimit(item.type)) ? 'f-col btn-off' : 'f-col add btn']">+</div>
+      <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'f-col remove btn' : 'f-col btn-off']">-</div>
     </div>
-    <router-link :event="isPoolReady? 'click' : ''" to="/result" :class="[isPoolReady ? 'btn btn-lg' : 'btn-lg btn-off']" v-on:click.native="play('dicer-back')">Roll</router-link>
+    <div class="f-row f-bottom f-grow">
+      <router-link :event="isPoolReady? 'click' : ''" to="/result" :class="[isPoolReady ? 'btn btn-lg f-grow' : 'btn-lg btn-off f-grow']" v-on:click.native="play('dicer-back')">Roll</router-link>
+    </div>
   </div>
 </template>
 
@@ -63,38 +65,48 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.dice-row {
+  width: 90%;
+}
 
-.col {
+.f-col {
+  align-self: center;
+}
+
+.f-row {
   margin: auto;
+}
+
+.f-bottom {
+  width: 80%;
+}
+
+.dice-number {
+  color: #4273ae;
+  font-size: x-large;
+  line-height: 50px;
+  text-align: center;
+  font-family: "starFont";
   width: 100px;
 }
 
-.add {
-  color: #4273ae;
-  font-size: xx-large;
+.dice {
+  stroke: white;
+  stroke-opacity: 0.4;
+  stroke-width: 2;
+  filter: drop-shadow(rgba(255, 255, 255, 1) 0px 0px 10px);
 }
 
 .reset {
   color: #4273ae;
 }
 
+.add {
+  color: #4273ae;
+}
+
 .remove {
   color: darkred;
-  font-size: xx-large;
-}
-
-.dice-number {
-  color: #4273ae;
-  font-size: xx-large;
-  text-align: center;
-  font-family: "starFont";
-}
-
-.dice {
-  stroke: rgb(255, 255, 255);
-  stroke-opacity: 1;
-  stroke-width: 2;
-  filter: drop-shadow(rgba(255, 255, 255, 0.5) 0px 0px 10px);
 }
 
 .ability {
