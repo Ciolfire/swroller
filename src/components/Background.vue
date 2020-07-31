@@ -78,7 +78,7 @@ export default {
 			let elapsed = time - prevTime;
 			prevTime = time;
 
-			moveStars(elapsed * 0.01);
+			moveStars(elapsed * 0.001);
 
 			clear();
 
@@ -105,8 +105,7 @@ export default {
 			requestAnimationFrame(tick);
 		}
 		requestAnimationFrame(init);
-	},
-	methods: {},
+	}
 };
 
 </script>

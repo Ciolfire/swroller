@@ -31,6 +31,7 @@
 					<span class="star-symbol star-symbol-light">{{ detailResult(item.roll)}}</span>
 				</div>
 		</div>
+		<Animation />
 		<div class="f-row f-grow f-bottom">
 			<router-link to="/dicer" class="btn btn-lg f-grow" v-on:click.native="play('dicer-click')">Dicer</router-link>
 		</div>
@@ -38,9 +39,13 @@
 </template>
 
 <script>
-import Display from "./../Display.js";
+import Animation from "../components/Animation.vue";
+import Display from "../Display.js";
 
 export default {
+	components: {
+    Animation,
+  },
   data: function () {
     return {
 			rules: this.rules,
@@ -133,6 +138,7 @@ export default {
 	flex-wrap:wrap;
 	width: 80%;
 	margin: auto;
+	justify-content: flex-start;
 }
 
 .success {

@@ -170,7 +170,6 @@ export default class Rules {
 
 	// We update the result with the current roll
 	_resultUpdate(roll) {
-		console.log(this._result);
 		for (var key in roll) {
 			if (!this._result[key]) {
 				this._result[key] = roll[key];
