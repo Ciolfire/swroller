@@ -1,9 +1,9 @@
 <template>
     <div id="ui">
       <div class="f-row">
-        <img style="transform: rotateY(180deg);" src="./../assets/img/rebeltrooper.png">
+        <img style="transform: rotateY(180deg);" src="./../assets/img/soldiers/rebeltrooper.png">
         <h1>STAR ROLLER</h1>
-        <img src="./../assets/img/stormtrooper.png">
+        <img src="./../assets/img/soldiers/stormtrooper.png">
       </div>
       <div class="f-row f-grow f-center" style="flex-direction:column">
         <router-link id="start-btn" to="/dicer" v-on:click.native="play('dicer-click')">Start</router-link>
@@ -27,8 +27,8 @@ export default {
 img {
   height: auto;
   width: auto;
-  max-height: 65px;
-  max-width: 66px;
+  max-height: 60px;
+  max-width: 58px;
 }
 
 #start-btn {

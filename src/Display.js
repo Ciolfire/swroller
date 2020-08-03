@@ -1,4 +1,18 @@
 export default ({
+    soldier: [
+        {
+            type: 'endorRebel',
+            src:  'assets/img/soldiers/rebeltrooper.png',
+            laser: 'assets/img/effects/blaster_green.png',
+            shootFrom: 34
+        },
+        {
+            type: 'stormtrooper',
+            src:  'assets/img/soldiers/stormtrooper.png',
+            laser: 'assets/img/effects/blaster_red.png',
+            shootFrom: 25
+        },
+    ],
     dice: [
         {
             type: 'ability',
