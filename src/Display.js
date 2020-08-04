@@ -1,10 +1,12 @@
 export default ({
     soldier: [
         {
-            type: 'endorRebel',
-            src:  'assets/img/soldiers/rebeltrooper.png',
+            type: 'endorTrooper',
+            src:  'assets/img/soldiers/endorTrooper/',
+            framesStart: 4,
+            framesIdle: 4,
+            shootFrom: 32,
             laser: 'assets/img/effects/blaster_green.png',
-            shootFrom: 34
         },
         {
             type: 'stormtrooper',

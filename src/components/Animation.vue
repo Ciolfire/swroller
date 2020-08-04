@@ -6,10 +6,13 @@ ui<template>
 
 <script>
 import Display from "../Display.js";
+import Soldier from "../soldier.js";
+
 export default {
   mounted() {
-    const playerSoldier = ressource("soldier", "endorRebel");
-    const computerSoldier =  ressource("soldier", "stormtrooper");
+    const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
+    // const playerSoldier = ressource("soldier", "stormtrooper");
+    const computerSoldier = ressource("soldier", "stormtrooper");
     const ctx = this.$refs.animation.getContext("2d");
 
     const width = window.innerWidth;
@@ -28,44 +31,54 @@ export default {
     const laser4 = [range+68, 232, 30, 3];
 
     this.$refs.animation.width = width;
-    function init() {
-      console.log(playerSoldier['src']);
-      console.log(computerSoldier['laser']);
+
+    let prevTime;
+
+    function init(time) {
+      prevTime = time;
       background.src = require("../assets/img/background/endor.jpg");
-      goodSoldier.src = require("../"+playerSoldier['src']);
-      goodLaser.src = require("../"+playerSoldier['laser']);
+      prepareSoldier(playerSoldier);
+      // goodSoldier.src = require("../"+playerSoldier['src']);
+      // goodLaser.src = require("../"+playerSoldier['laser']);
       badSoldier.src = require("../"+computerSoldier['src']);
       badLaser.src = require("../"+computerSoldier['laser']);
-      window.requestAnimationFrame(draw);
+      window.requestAnimationFrame(tick);
 
     }
 
-    // let time = 0;
+    function prepareSoldier(soldier) {
+      for (const index in soldier._idle) {
+        let tmp = new Image();
+        tmp.src = require("../"+soldier._idle[index]);
+        soldier._idle[index] = tmp;
+      }
+    }
+
     function ressource(category, type) {
       return Display[category].find(obj => obj.type == type);
     }
 
-    function draw() {
-      
+    function draw(distance, frame) {
+      console.log("frame: "+frame);
       ctx.drawImage(background, 0, 0, 600, 300);
 
       ctx.translate(450, 0);
       ctx.scale(-1, 1);
       fire(laser3);
-      ctx.drawImage(goodSoldier, range+100, 205);
+      let test = frame % 4 + 1;
+      console.log("test: "+test);
+      ctx.drawImage(playerSoldier._idle[test], range+100, 205);
       fire(laser4);
       ctx.drawImage(goodSoldier, range+50, 210);
       ctx.translate(450, 0);
       ctx.scale(-1, 1);
-        fire(laser, false);
+      fire(laser, false);
       ctx.drawImage(badSoldier, range+100, 205);
-        fire(laser2, false);
+      fire(laser2, false);
       ctx.drawImage(badSoldier, range+50, 210);
-
-      window.requestAnimationFrame(draw);
     }
 
-    function fire(laser, isGood=true, speed=2) {
+    function fire(laser, isGood=true, speed=20) {
       laser[0] -= speed;
       if (isGood == true) {
         ctx.drawImage(goodLaser, laser[0], laser[1]);
@@ -74,7 +87,18 @@ export default {
       }
     }
 
-    init();
+    let frame = 0;
+
+    function tick(time) {
+      let elapsed = time - prevTime;
+      if(elapsed > 100) {
+        frame = frame+3;
+        prevTime = time;
+        draw(elapsed, frame);
+      } 
+			requestAnimationFrame(tick);
+		}
+    requestAnimationFrame(init);
   }
 }
 </script>
