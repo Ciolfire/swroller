@@ -5,14 +5,18 @@ export default ({
             src:  'assets/img/soldiers/endorTrooper/',
             framesStart: 4,
             framesIdle: 4,
-            shootFrom: 32,
+            shootX: 32,
+            shootY: 17,
             laser: 'assets/img/effects/blaster_green.png',
         },
         {
-            type: 'stormtrooper',
-            src:  'assets/img/soldiers/stormtrooper.png',
+            type: 'stormTrooper',
+            src:  'assets/img/soldiers/stormTrooper/',
+            framesStart: 4,
+            framesIdle: 0,
+            shootX: 32,
+            shootY: 29,
             laser: 'assets/img/effects/blaster_red.png',
-            shootFrom: 25
         },
     ],
     dice: [

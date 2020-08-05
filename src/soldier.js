@@ -3,14 +3,16 @@ export default class Soldier {
     _start;
     _idle;
     _laser;
-    _shootFrom;
+    _shootX;
+    _shootY;
 
     constructor(ressource) {
         this._name = ressource['type'];
         this._start = this.getFilesName(ressource['src']+ressource['type']+"_", ressource['framesStart']);
         this._idle = this.getFilesName(ressource['src']+"idle/"+ressource['type']+"_L_", ressource['framesIdle']);
         this._laser = ressource['laser'];
-        this._shootFrom = ressource['shootFrom'];
+        this._shootX = ressource['shootX'];
+        this._shootY = ressource['shootY'];
     }
     
     getFilesName(file, frames) {
