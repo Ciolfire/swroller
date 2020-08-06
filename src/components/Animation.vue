@@ -15,8 +15,9 @@ export default {
       this.$root.play('dicer-click');
       cancelAnimationFrame(last);
     },
-    play: function () {
-      this.$root.play('dicer-click');
+    play: function (sound) {
+      this.$root.play(sound);
+      return true;
     }
   },
   mounted() {
@@ -29,7 +30,7 @@ export default {
     
     this.$refs.animation.width = width;
     const range = width/2;
-
+    const ref = this;
 
     background.src = require("../assets/img/background/endor.jpg");
     prepareSoldier(playerSoldier);
@@ -38,51 +39,58 @@ export default {
       {
         soldier: playerSoldier,
         side: 1,
-        posX: range+100,
+        posX: range*1.5,
         posY: 210,
-        laserX: range+100-32,
+        laserX: range*1.5-32,
       },
       {
         soldier: computerSoldier,
         side: 2,
-        posX: range+100,
+        posX: range*1.5,
         posY: 210,
-        laserX: range+100-32,
+        laserX: range*1.5-32,
       },
       {
         soldier: playerSoldier,
         side: 1,
-        posX: range+50,
+        posX: range*1.4,
         posY: 230,
-        laserX: range+50-32,
+        laserX: range*1.4-32,
       },
     ];
     let start;
+    let played;
 
     function step(timestamp) {
       if (start == null) {
         start = timestamp;
       }
       const elapsed = timestamp - start;
+      let frame = Math.floor(elapsed/150%4)+1;
+
       if(elapsed < 1000) {
-        draw(elapsed, 1);
+        draw(elapsed, 1, frame);
         last = requestAnimationFrame(step);
       } else if (elapsed < 2000) {
-        draw(elapsed, 2);
+        frame = Math.floor((elapsed-1000)/100)+1;
+        draw(elapsed, 2, frame);
         last = requestAnimationFrame(step);
+        if (frame == 6 && !played) {
+          played = ref.play('blaster1');
+        }
       } else if (elapsed < 6000) {
-        draw(elapsed, 3);
+        draw(elapsed, 3, frame);
         last = requestAnimationFrame(step);
       } else {
         cancelAnimationFrame(last)
       }
-		}
+    }
 
-    function draw(elapsed, step) {
+
+    function draw(elapsed, step, frame) {
       ctx.drawImage(background, 0, 0, width, 300);
       
       let lastSide = null;
-      let frame;
       for (const index in soldiers) {
         const current = soldiers[index];
         const soldier = current.soldier;
@@ -91,17 +99,12 @@ export default {
           ctx.scale(-1, 1);
         }
         if (step == 2) {
-          frame = Math.floor((elapsed-1000)/100)+1;
-          console.log("elaps: "+elapsed);
-          console.log("frame: "+frame);
-          frame = Math.min(4, frame);
-          ctx.drawImage(soldier._start[frame], current.posX, current.posY);
-        } else {
-          frame = Math.floor(elapsed/150%4)+1;
-          ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
-          if (frame == 4 && elapsed > 1500) {
+          ctx.drawImage(soldier._start[Math.min(4, frame)], current.posX, current.posY);
+          if (frame > 6 && elapsed > 1500) {
             current.laserX = fire(soldier._laser, current.laserX, current.posY+soldier._shootY);
           }
+        } else {
+          ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
         }
         if (step == 3) {
           current.laserX = fire(soldier._laser, current.laserX, current.posY+soldier._shootY);
@@ -115,7 +118,7 @@ export default {
     }
 
     function fire(laser, x, y) {
-      const speed = 1;
+      const speed = 5;
       ctx.drawImage(laser, x, y);
       return x - speed;
     }
