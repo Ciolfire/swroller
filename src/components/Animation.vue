@@ -13,7 +13,10 @@ export default {
   methods: {
     stop: function () {
       this.$root.play('dicer-click');
-      cancelAnimationFrame(last)
+      cancelAnimationFrame(last);
+    },
+    play: function () {
+      this.$root.play('dicer-click');
     }
   },
   mounted() {
@@ -96,8 +99,11 @@ export default {
         } else {
           frame = Math.floor(elapsed/150%4)+1;
           ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
+          if (frame == 4 && elapsed > 1500) {
+            current.laserX = fire(soldier._laser, current.laserX, current.posY+soldier._shootY);
+          }
         }
-        if (step == 3|| frame == 4 && elapsed > 1500) {
+        if (step == 3) {
           current.laserX = fire(soldier._laser, current.laserX, current.posY+soldier._shootY);
         }
         lastSide = current.side;

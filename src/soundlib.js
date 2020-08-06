@@ -16,5 +16,9 @@ export default {
             name: 'delete2',
             src: "sound/ui/Delete2.mp3"
         },
+        {
+            name: 'blaster1',
+            src: "sound/blaster/1759.mp3"
+        },
     ]
 }
