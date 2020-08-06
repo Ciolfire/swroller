@@ -13,7 +13,7 @@ export default ({
             type: 'stormTrooper',
             src:  'assets/img/soldiers/stormTrooper/',
             framesStart: 4,
-            framesIdle: 0,
+            framesIdle: 4,
             shootX: 32,
             shootY: 29,
             laser: 'assets/img/effects/blaster_red.png',

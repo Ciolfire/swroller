@@ -1,5 +1,5 @@
 ui<template>
-<div>
+<div v-on:click="stop()">
   <canvas height="300" ref="animation"/>
 </div>
 </template>
@@ -7,8 +7,15 @@ ui<template>
 <script>
 import Display from "../Display.js";
 import Soldier from "../soldier.js";
+  let last;
 
 export default {
+  methods: {
+    stop: function () {
+      this.$root.play('dicer-click');
+      cancelAnimationFrame(last)
+    }
+  },
   mounted() {
     const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
     const computerSoldier = new Soldier (ressource("soldier", "stormTrooper"));
@@ -20,46 +27,93 @@ export default {
     this.$refs.animation.width = width;
     const range = width/2;
 
+
+    background.src = require("../assets/img/background/endor.jpg");
+    prepareSoldier(playerSoldier);
+    prepareSoldier(computerSoldier);
+    let soldiers = [
+      {
+        soldier: playerSoldier,
+        side: 1,
+        posX: range+100,
+        posY: 210,
+        laserX: range+100-32,
+      },
+      {
+        soldier: computerSoldier,
+        side: 2,
+        posX: range+100,
+        posY: 210,
+        laserX: range+100-32,
+      },
+      {
+        soldier: playerSoldier,
+        side: 1,
+        posX: range+50,
+        posY: 230,
+        laserX: range+50-32,
+      },
+    ];
     let start;
-    let last;
-    let goodSoldiers;
-    let badSoldiers;
-
-    function init(timestamp) {
-      start = timestamp;
-      background.src = require("../assets/img/background/endor.jpg");
-      prepareSoldier(playerSoldier);
-      prepareSoldier(computerSoldier);
-      goodSoldiers = [
-        {
-          soldier: playerSoldier,
-          posX: range+50,
-          posY: 210
-        }
-      ];
-
-      badSoldiers = [
-        {
-          soldier: computerSoldier,
-          posX: range+50,
-          posY: 210
-        }
-      ];
-
-      last = requestAnimationFrame(step);
-    }
 
     function step(timestamp) {
+      if (start == null) {
+        start = timestamp;
+      }
       const elapsed = timestamp - start;
-      if(elapsed < 10000) {
-        console.log(elapsed);
-        draw(elapsed);
+      if(elapsed < 1000) {
+        draw(elapsed, 1);
+        last = requestAnimationFrame(step);
+      } else if (elapsed < 2000) {
+        draw(elapsed, 2);
+        last = requestAnimationFrame(step);
+      } else if (elapsed < 6000) {
+        draw(elapsed, 3);
         last = requestAnimationFrame(step);
       } else {
         cancelAnimationFrame(last)
       }
 		}
 
+    function draw(elapsed, step) {
+      ctx.drawImage(background, 0, 0, width, 300);
+      
+      let lastSide = null;
+      let frame;
+      for (const index in soldiers) {
+        const current = soldiers[index];
+        const soldier = current.soldier;
+        if (lastSide != current.side) {
+          ctx.translate(width, 0);
+          ctx.scale(-1, 1);
+        }
+        if (step == 2) {
+          frame = Math.floor((elapsed-1000)/100)+1;
+          console.log("elaps: "+elapsed);
+          console.log("frame: "+frame);
+          frame = Math.min(4, frame);
+          ctx.drawImage(soldier._start[frame], current.posX, current.posY);
+        } else {
+          frame = Math.floor(elapsed/150%4)+1;
+          ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
+        }
+        if (step == 3|| frame == 4 && elapsed > 1500) {
+          current.laserX = fire(soldier._laser, current.laserX, current.posY+soldier._shootY);
+        }
+        lastSide = current.side;
+      }
+      if (lastSide == 1) {
+        ctx.translate(width, 0);
+        ctx.scale(-1, 1);
+      }
+    }
+
+    function fire(laser, x, y) {
+      const speed = 1;
+      ctx.drawImage(laser, x, y);
+      return x - speed;
+    }
+    
     function prepareSoldier(soldier) {
       for (const index in soldier._idle) {
         let tmp = new Image();
@@ -79,49 +133,13 @@ export default {
     function ressource(category, type) {
       return Display[category].find(obj => obj.type == type);
     }
-
-    function draw(elapsed) {
-      console.log("elapsed: "+elapsed);
-      ctx.drawImage(background, 0, 0, 600, 300);
-
-      ctx.translate(450, 0);
-      ctx.scale(-1, 1);
-      for (const index in goodSoldiers) {
-        const current = goodSoldiers[index];
-        const soldier = current.soldier;
-        ctx.drawImage(soldier._start[4], current.posX, current.posY);
-        ctx.drawImage(soldier._laser, current.posX-soldier._shootX, current.posY+soldier._shootY);
-      }
-      ctx.translate(450, 0);
-      ctx.scale(-1, 1);
-      for (const index in badSoldiers) {
-        const current = badSoldiers[index];
-        const soldier = current.soldier;
-        ctx.drawImage(soldier._start[4], current.posX, current.posY);
-        ctx.drawImage(soldier._laser, current.posX-soldier._shootX, current.posY+soldier._shootY);
-      }
-      // fire(laser3);
-      // ctx.drawImage(playerSoldier._idle[test], range+100, 205);
-      // ctx.drawImage(playerSoldier._start[test], range+100, 205);
-      // fire(laser4);
-      // ctx.drawImage(goodSoldier, range+50, 210);
-      // fire(laser, false);
-      // ctx.drawImage(badSoldier, range+100, 205);
-      // fire(laser2, false);
-      // ctx.drawImage(badSoldier, range+50, 210);
+    
+    // When the background is read, we start the animation
+    background.onload = function() {
+      (last = requestAnimationFrame(step));
     }
-
-    // function fire(laser, isGood=true, speed=10) {
-    //   laser[0] -= speed;
-    //   if (isGood == true) {
-    //     ctx.drawImage(goodLaser, laser[0], laser[1]);
-    //     } else {
-    //     ctx.drawImage(badLaser, laser[0], laser[1]);
-    //   }
-    // }
-    last = requestAnimationFrame(init);
-
   }
+  
 }
 </script>
 
