@@ -19,7 +19,6 @@
 			<span class="dark" v-if="this.rules.getResult('dark') > 0"> {{ this.rules.getResult('dark') }} <span class="star-symbol star-symbol-dark">Z</span></span>
 		</p>
 	</h5>
-    <!-- <div class="btn">{{ this.rules.getResult() }}</div> -->
 		<br>
 		<br>
 		<h5>details</h5>

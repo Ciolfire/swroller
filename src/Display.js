@@ -34,7 +34,7 @@ export default ({
       framesIdle: 4,
       shootX: 32,
       shootY: 29,
-      laser: 'assets/img/effects/blaster_red.png',
+      laser: 'assets/img/effects/blaster_orange.png',
     },
   ],
   dice: [

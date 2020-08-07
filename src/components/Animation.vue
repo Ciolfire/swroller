@@ -21,6 +21,7 @@ export default {
     stop: function () {
       this.$root.play('dicer-click');
       cancelAnimationFrame(last);
+      this.visible = false;
     },
     play: function (sound) {
       this.$root.play(sound);
@@ -39,13 +40,17 @@ export default {
     const ref = this;
 
     const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
+    const playerOfficier = new Soldier(ressource("soldier", "endorOfficier"));
     const computerSoldier = new Soldier (ressource("soldier", "stormTrooper"));
+    const computerOfficier = new Soldier (ressource("soldier", "stormOfficier"));
     
     let kills = this.rules.killSoldiers();
 
     background.src = require("../assets/img/background/endor.jpg");
     prepareSoldier(playerSoldier);
+    prepareSoldier(playerOfficier);
     prepareSoldier(computerSoldier);
+    prepareSoldier(computerOfficier);
     
     const positions = [
       [1.3,205, false],
@@ -70,12 +75,12 @@ export default {
       if (side == 1) {
         soldier = playerSoldier;
         if (isLeader) {
-          soldier = computerSoldier;
+          soldier = playerOfficier;
         }
       } else {
         soldier = computerSoldier;
         if (isLeader) {
-          soldier = playerSoldier;
+          soldier = computerOfficier;
         }
       }
       soldiers[index] = {soldier: soldier, side: side, posX: range*ratioX, posY: posY, laserX: range*ratioX-playerSoldier._shootX, laserY: posY};
@@ -103,15 +108,15 @@ export default {
       if (currentStep == 1 && elapsed > 1000 && frame == 2) {
         currentStep = 2;
         console.info("switch to step "+currentStep);
-      } else if (currentStep == 3 && soldiers[0].posX <= width - soldiers[0].laserX - soldiers[0].soldier._shootX) {
+      } else if (currentStep == 3 && soldiers[5].posX <= width - soldiers[5].laserX - soldiers[5].soldier._shootX) {
         currentStep = 4;
         // ref.play('hit1');
-        ref.play('hit1');
+        // ref.play('hit1');
+        // ref.play('hit1');
         ref.play('hit2');
-        ref.play('hit1');
         ref.play('hit2');
         console.info("switch to step "+currentStep);
-      } else if (elapsed > 6000) {
+      } else if (elapsed > 5000) {
         cancelAnimationFrame(last);
         ref.visible = false;
         return true;
@@ -131,7 +136,7 @@ export default {
       ctx.drawImage(background, 0, 0, width, 300);
       
       let lastSide = null;
-      let speed= 8;
+      let speed= 12;
       for (const index in soldiers) {
         const current = soldiers[index];
         const soldier = current.soldier;
@@ -215,7 +220,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .hidden {
-  visibility: hidden;
+  visibility: collapse;
 }
 
 .movie {
