@@ -31,89 +31,101 @@ export default {
     this.rules = this.$rules;
   },
   mounted() {
-    const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
-    const computerSoldier = new Soldier (ressource("soldier", "stormTrooper"));
     const ctx = this.$refs.animation.getContext("2d");
-
-    const width = window.innerWidth;
     const background = new Image();
-    
+    const width = window.innerWidth;
     this.$refs.animation.width = width;
     const range = width/2;
     const ref = this;
-    var result;
-    if (this.rules.getResult('success') > 0) {result = 1;} else {result = 2;}
+
+    const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
+    const computerSoldier = new Soldier (ressource("soldier", "stormTrooper"));
+    
+    let kills = this.rules.killSoldiers();
 
     background.src = require("../assets/img/background/endor.jpg");
     prepareSoldier(playerSoldier);
     prepareSoldier(computerSoldier);
-    let soldiers = [
-      {
-        soldier: playerSoldier,
-        side: 1,
-        posX: range*1.5,
-        posY: 210,
-        laserX: range*1.5-32,
-        laserY: 210,
-      },
-      {
-        soldier: computerSoldier,
-        side: 2,
-        posX: range*1.5,
-        posY: 210,
-        laserX: range*1.5-32,
-        laserY: 210,
-      },
-      {
-        soldier: playerSoldier,
-        side: 1,
-        posX: range*1.4,
-        posY: 230,
-        laserX: range*1.4-32,
-        laserY: 230,
-      },
+    
+    const positions = [
+      [1.3,205, false],
+      [1.5,210, false],
+      [1.4,235, false],
+      [1.6,240, false],
+      [1.15,225, true], //leader
     ];
-    let start;
-    let played;
-    let currentStep=1;
 
+    let soldiers = [];
+    let index = 0;
+    for (let index = 0; index < positions.length; index++) {
+      const coord = positions[index];
+      recruitSoldier(coord[0], coord[1], 1, coord[2]);
+      recruitSoldier(coord[0], coord[1], 2, coord[2]);
+    }
+    
+    // Choose the kind of soldier to recruit
+    function recruitSoldier(ratioX, posY, side, isLeader) {
+      let soldier;
+
+      if (side == 1) {
+        soldier = playerSoldier;
+        if (isLeader) {
+          soldier = computerSoldier;
+        }
+      } else {
+        soldier = computerSoldier;
+        if (isLeader) {
+          soldier = playerSoldier;
+        }
+      }
+      soldiers[index] = {soldier: soldier, side: side, posX: range*ratioX, posY: posY, laserX: range*ratioX-playerSoldier._shootX, laserY: posY};
+      index++;
+    }
+
+    let start;
+    let currentStep;
+    // let played;
+    
     function step(timestamp) {
       if (start == null) {
         start = timestamp;
+        currentStep = 1;
       }
-      let frame;
       const elapsed = timestamp - start;
-      
-      if (currentStep != 2) {
-        frame = Math.floor(elapsed/150%4)+1;
-        } else {
+
+      let frame;
+      if (currentStep == 2) {
         frame = Math.floor((elapsed-1000)/100)+1;
+        } else {
+          frame = Math.floor(elapsed/150%4)+1;
       }
 
-      if (elapsed > 1000 && currentStep == 1 && frame == 2) {
+      if (currentStep == 1 && elapsed > 1000 && frame == 2) {
         currentStep = 2;
-        console.info("switch to step: "+currentStep);
+        console.info("switch to step "+currentStep);
       } else if (currentStep == 3 && soldiers[0].posX <= width - soldiers[0].laserX - soldiers[0].soldier._shootX) {
         currentStep = 4;
+        // ref.play('hit1');
+        ref.play('hit1');
         ref.play('hit2');
-        console.info("switch to step: "+currentStep);
+        ref.play('hit1');
+        ref.play('hit2');
+        console.info("switch to step "+currentStep);
       } else if (elapsed > 6000) {
         cancelAnimationFrame(last);
         ref.visible = false;
-        console.log('ok');
         return true;
       }
 
       draw(elapsed, currentStep, frame);
-      if (frame == 6 && !played) {
-        played = ref.play('blaster1');
-      } else if (frame == 10 && played) {
+      if (currentStep == 2 && frame == 6) {
+        ref.play('blaster1');
+      } else if (currentStep == 2 && frame == 10) {
         currentStep = 3;
-        console.info("switch to step: "+currentStep);
+        console.info("switch to step "+currentStep);
       }
       last = requestAnimationFrame(step);
     }
-
 
     function draw(elapsed, step, frame) {
       ctx.drawImage(background, 0, 0, width, 300);
@@ -139,7 +151,7 @@ export default {
             ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
             break;
           case 4:
-            if (result == current.side) {
+            if (!kills.includes(index)) {
               ctx.drawImage(soldier._idle[frame], current.posX, current.posY);
             } else {
               speed = kill(soldier._idle[1], current.posX, current.posY, speed);
