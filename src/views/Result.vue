@@ -48,7 +48,6 @@ export default {
   },
   data: function () {
     return {
-			rules: this.rules,
 			Display: Display,
     };
   },
