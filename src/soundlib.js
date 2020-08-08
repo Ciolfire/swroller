@@ -21,6 +21,10 @@ export default {
       src: "sound/blaster/blaster1.mp3"
     },
     {
+      name: 'blaster2',
+      src: "sound/blaster/blaster2.mp3"
+    },
+    {
       name: 'hit1',
       src: "sound/blaster/hit1.mp3"
     },

@@ -33,7 +33,7 @@ export default ({
       framesStart: 4,
       framesIdle: 4,
       shootX: 32,
-      shootY: 29,
+      shootY: 25,
       laser: 'assets/img/effects/blaster_orange.png',
     },
   ],

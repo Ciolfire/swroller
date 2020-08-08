@@ -1,6 +1,9 @@
 ui<template>
 <div  :class="[visible ? 'movie visible' : 'hidden']" v-on:click="stop()">
-  <canvas class="animation" height="300" ref="animation"/>
+  <div class="col">
+    <canvas class="animation" height="300" ref="animation"/>
+    <p class="text"><img height="20" src="./../assets/img/tap.svg"> Skip!</p>
+  </div>
 </div>
 </template>
 
@@ -46,12 +49,12 @@ export default {
     
     let kills = this.rules.killSoldiers();
 
-    background.src = require("../assets/img/background/endor.jpg");
-    prepareSoldier(playerSoldier);
-    prepareSoldier(playerOfficier);
-    prepareSoldier(computerSoldier);
-    prepareSoldier(computerOfficier);
-    
+    let soldiers = [];
+    let index = 0;
+    let start=null;
+    let ending;
+    let currentStep;
+    let played = false;
     const positions = [
       [1.3,205, false],
       [1.5,210, false],
@@ -60,8 +63,11 @@ export default {
       [1.15,225, true], //leader
     ];
 
-    let soldiers = [];
-    let index = 0;
+    background.src = require("../assets/img/background/endor.jpg");
+    prepareSoldier(playerSoldier);
+    prepareSoldier(playerOfficier);
+    prepareSoldier(computerSoldier);
+    prepareSoldier(computerOfficier);
     for (let index = 0; index < positions.length; index++) {
       const coord = positions[index];
       recruitSoldier(coord[0], coord[1], 1, coord[2]);
@@ -87,16 +93,16 @@ export default {
       index++;
     }
 
-    let start;
-    let currentStep;
-    // let played;
-    
+    // Take care of calling the draw function, and to switch the step
     function step(timestamp) {
       if (start == null) {
         start = timestamp;
         currentStep = 1;
       }
       const elapsed = timestamp - start;
+        if (ending == null && currentStep == 4) {
+          ending = elapsed;
+        }
 
       let frame;
       if (currentStep == 2) {
@@ -110,21 +116,21 @@ export default {
         console.info("switch to step "+currentStep);
       } else if (currentStep == 3 && soldiers[5].posX <= width - soldiers[5].laserX - soldiers[5].soldier._shootX) {
         currentStep = 4;
-        // ref.play('hit1');
-        // ref.play('hit1');
-        // ref.play('hit1');
-        ref.play('hit2');
+        ref.play('hit1');
         ref.play('hit2');
         console.info("switch to step "+currentStep);
-      } else if (elapsed > 5000) {
+      } else if (currentStep == 4 && elapsed > ending+1500) {
         cancelAnimationFrame(last);
         ref.visible = false;
         return true;
       }
 
       draw(elapsed, currentStep, frame);
-      if (currentStep == 2 && frame == 6) {
+      if (currentStep == 2 && frame == 6 && !played) {
         ref.play('blaster1');
+        ref.play('blaster2');
+        // ref.play('blaster1');
+        played = true;
       } else if (currentStep == 2 && frame == 10) {
         currentStep = 3;
         console.info("switch to step "+currentStep);
@@ -132,6 +138,7 @@ export default {
       last = requestAnimationFrame(step);
     }
 
+    // Draw the animation, depending on the step
     function draw(elapsed, step, frame) {
       ctx.drawImage(background, 0, 0, width, 300);
       
@@ -233,5 +240,21 @@ export default {
 
 .animation {
   height: 300px;
+}
+
+.text {
+  margin: 0;
+  font-family: starFont;
+  filter: drop-shadow(rgba(255, 255, 255, 1) 0px 0px 10px);
+  color: white;
+  text-align: right;
+  line-height: 20px;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+.icon {
+  fill: white;
 }
 </style>
