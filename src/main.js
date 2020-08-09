@@ -9,27 +9,22 @@ Vue.config.productionTip = false
 document.addEventListener('deviceready', () => {
 	console.info('[Device ready]');
 
-	/*global Media:writable */
+	// /*global Media:writable */
 Vue.prototype.$rules = new Rules();
+
+for (const key in soundlib.sounds) {
+	const element = soundlib.sounds[key];
+	window.plugins.NativeAudio.preloadSimple(element.name, element.src, function(){
+	}, function(msg){
+		console.log( 'error: ' + msg );
+	});
+}
 
 	new Vue({
 		router,
 		methods: {
 			play: function (track) {
-				const result = soundlib.sounds.filter(function (elem) {
-					if (elem.name == track) return elem;
-				});
-
-				let audio = new Media(result[0].src, onSuccess, onError);
-
-				function onSuccess() {
-				}
-				
-				function onError(error) {
-					console.log("Error:" + error.code);
-				}
-				
-				audio.play();
+				window.plugins.NativeAudio.play(track);
 			}
 		},
 		render: h => h(App)
