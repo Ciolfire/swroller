@@ -1,5 +1,8 @@
 # swroller
-<img src="home.png"><img src="dicer.png"><img src="result.png">
+<img src="animation.png">
+
+
+<img src="dicer.png"><img src="result.png">
 ## Project setup
 ```
 npm install
