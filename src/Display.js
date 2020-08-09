@@ -19,6 +19,15 @@ export default ({
       laser: 'assets/img/effects/blaster_blue.png',
     },
     {
+      type: 'hanSolo',
+      src: 'assets/img/soldiers/hanSolo/',
+      framesStart: 4,
+      framesIdle: 4,
+      shootX: 32,
+      shootY: 17,
+      laser: 'assets/img/effects/blaster_blue.png',
+    },
+    {
       type: 'stormTrooper',
       src: 'assets/img/soldiers/stormTrooper/',
       framesStart: 4,

@@ -28,6 +28,7 @@ export default {
     },
     play: function (sound) {
       this.$root.play(sound);
+      console.log(sound);
       return true;
     }
   },
@@ -43,7 +44,7 @@ export default {
     const ref = this;
 
     const playerSoldier = new Soldier(ressource("soldier", "endorTrooper"));
-    const playerOfficier = new Soldier(ressource("soldier", "endorOfficier"));
+    const playerOfficier = new Soldier(ressource("soldier", "hanSolo"));
     const computerSoldier = new Soldier (ressource("soldier", "stormTrooper"));
     const computerOfficier = new Soldier (ressource("soldier", "stormOfficier"));
     
@@ -127,10 +128,9 @@ export default {
 
       draw(elapsed, currentStep, frame);
       if (currentStep == 2 && frame == 6 && !played) {
-        ref.play('blaster1');
+        played = ref.play('blaster1');
         ref.play('blaster2');
         // ref.play('blaster1');
-        played = true;
       } else if (currentStep == 2 && frame == 10) {
         currentStep = 3;
         console.info("switch to step "+currentStep);
