@@ -22,7 +22,7 @@
 		<br>
 		<br>
 		<h5>details</h5>
-		<div class="f-row">
+		<div class="f-row" style="height:0px;">
 				<div v-for="(item,index) in rules._resultDetail" :key="index">
 					<svg class="f-col" height="30" viewBox="0 0 100 100">
 						<polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
@@ -31,7 +31,7 @@
 				</div>
 		</div>
 		<Animation />
-		<div class="f-row f-grow f-bottom">
+		<div class="f-row f-bottom f-grow">
 			<router-link to="/dicer" class="btn btn-lg f-grow" v-on:click.native="play('dicer-click')">Dicer</router-link>
 		</div>
   </div>
