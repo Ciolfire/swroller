@@ -116,7 +116,7 @@ h5 {
   color: #e0d648;
   border: 2px solid #4273ae;
   box-shadow: inset 0 0 10px #4273ae;
-  font-size: x-large;
+  font-size: xx-large;
   background: black;
   cursor: pointer;
   text-decoration: none;
