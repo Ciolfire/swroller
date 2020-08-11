@@ -3,7 +3,6 @@ import Router from "vue-router";
 import Home from './views/Home.vue'
 import Dicer from './views/Dicer.vue'
 import Result from './views/Result.vue'
-import HelloWorld from './components/HelloWorld.vue'
 
 Vue.use(Router);
 
