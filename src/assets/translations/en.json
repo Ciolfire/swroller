@@ -1,0 +1,6 @@
+{ 
+  "START": "Start",
+  "RESET": "Reset",
+  "ROLL": "Roll",
+  "REROLL": "New roll"
+}

@@ -8,6 +8,14 @@ Vue.config.productionTip = false
 
 document.addEventListener('deviceready', () => {
 	console.info('[Device ready]');
+	switch (true) {
+		case navigator.language.includes("fr"):
+			
+			break;
+		case navigator.language.includes("en"):
+		default:
+			break;
+	} 
 
 	// /*global Media:writable */
 Vue.prototype.$rules = new Rules();
