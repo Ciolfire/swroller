@@ -20,11 +20,6 @@ export default new Router({
 			component: Dicer 
 		},
 		{ 
-			path: "/hello",
-			name: "Hello World",
-			component: HelloWorld
-		},
-		{ 
 			path: "/result",
 			name: "Result",
 			component: Result
