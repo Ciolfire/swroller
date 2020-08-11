@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from "./router";
 import soundlib from "./soundlib";
 import Rules from "./rules";
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
@@ -10,10 +11,13 @@ document.addEventListener('deviceready', () => {
 	console.info('[Device ready]');
 	switch (true) {
 		case navigator.language.includes("fr"):
-			
+			i18n.locale = "fr";
 			break;
 		case navigator.language.includes("en"):
-		default:
+			i18n.locale = "en";
+			break;
+			default:
+			i18n.locale = "en";
 			break;
 	} 
 
@@ -29,13 +33,16 @@ for (const key in soundlib.sounds) {
 }
 
 	new Vue({
-		router,
-		methods: {
+        router,
+
+        methods: {
 			play: function (track) {
 				window.plugins.NativeAudio.play(track);
 			}
 		},
-		render: h => h(App)
-	}).$mount('#app')
+
+        i18n,
+        render: h => h(App)
+    }).$mount('#app')
 
 });

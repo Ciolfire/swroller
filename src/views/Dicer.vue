@@ -1,6 +1,6 @@
 <template>
   <div id="ui">
-    <div @click="play('delete2')" class="btn btn-lg reset" v-on:click="resetPool()">Reset</div>
+    <div @click="play('delete2')" class="btn btn-lg reset" v-on:click="resetPool()">{{ $t('RESET') }}</div>
     <div class="f-row dice-row" v-for="(item, index) in display.dice" :key="index">
       <svg class="f-col-0" width="50" height="50" viewBox="0 0 100 100">
         <polygon :class="'dice ' + item.type" :points="ressource('dice', item.type)"/>
@@ -10,7 +10,7 @@
       <div @click="removeFromPool(item.type)" :class="[rules.getPoolSize(item.type) ? 'f-col remove btn' : 'f-col btn-off']">-</div>
     </div>
     <div class="f-row f-bottom f-grow">
-      <router-link :event="isPoolReady? 'click' : ''" to="/result" :class="[isPoolReady ? 'btn btn-lg f-grow' : 'btn-lg btn-off f-grow']" v-on:click.native="play('dicer-back')">Roll</router-link>
+      <router-link :event="isPoolReady? 'click' : ''" to="/result" :class="[isPoolReady ? 'btn btn-lg f-grow' : 'btn-lg btn-off f-grow']" v-on:click.native="play('dicer-back')">{{ $t('ROLL') }}</router-link>
     </div>
   </div>
 </template>
@@ -62,6 +62,19 @@ export default {
 };
 
 </script>
+
+<i18n>
+{
+  "en": {
+    "RESET": "Reset pool",
+    "ROLL": "Roll Dices"
+  },
+  "fr": {
+    "RESET": "Remise à zero",
+    "ROLL": "Lancer les dés"
+  }
+}
+</i18n>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -135,5 +148,9 @@ export default {
 
 .force {
 	fill:rgb(255,255,255);
+}
+
+.btn-lg {
+	font-size:x-large;
 }
 </style>
